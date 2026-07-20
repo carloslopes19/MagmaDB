@@ -3,13 +3,13 @@
 import asyncio, os, shutil, socket, subprocess, sys, time
 
 CRLF = b"\r\n"
-DIR = "_test_voltdb"
+DIR = "_test_magmadb"
 PORT = 16379
 
 
 # ── 1. Unit: engine ────────────────────────────────────────────────
 def test_engine():
-    from voltdb.engine import VoltEngine
+    from magmadb.engine import VoltEngine
     e = VoltEngine(max_keys=3)
     e.set(b"a", b"1"); e.set(b"b", b"2"); e.set(b"c", b"3")
     e.get(b"a")  # move 'a' to head
@@ -24,8 +24,8 @@ def test_engine():
 
 # ── 2. Unit: WAL ───────────────────────────────────────────────────
 def test_wal():
-    from voltdb.engine import VoltEngine
-    from voltdb.storage import Wal
+    from magmadb.engine import VoltEngine
+    from magmadb.storage import Wal
     d = "_test_wal"
     if os.path.isdir(d): shutil.rmtree(d)
     w = Wal(data_dir=d)
@@ -40,8 +40,8 @@ def test_wal():
 
 # ── 3. Unit: snapshot ──────────────────────────────────────────────
 async def test_snapshot():
-    from voltdb.engine import VoltEngine
-    from voltdb.storage import Snapshotter
+    from magmadb.engine import VoltEngine
+    from magmadb.storage import Snapshotter
     d = "_test_snap"
     if os.path.isdir(d): shutil.rmtree(d)
     e = VoltEngine(max_keys=100)
@@ -62,7 +62,7 @@ def test_server():
         s.connect(("127.0.0.1", PORT)); s.sendall(cmd)
         r = s.recv(4096); s.close(); return r
 
-    p = subprocess.Popen([sys.executable, "-m", "voltdb.server",
+    p = subprocess.Popen([sys.executable, "-m", "magmadb.server",
                           "--port", str(PORT), "--max-keys", "100",
                           "--data-dir", DIR, "--bgsave-interval", "0"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)

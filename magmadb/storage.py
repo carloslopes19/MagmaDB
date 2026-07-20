@@ -7,8 +7,8 @@ import struct
 import threading
 from typing import Dict, List, Optional, IO
 
-from voltdb.engine import VoltEngine
-from voltdb.protocol import RESP, ProtocolError
+from magmadb.engine import VoltEngine
+from magmadb.protocol import RESP, ProtocolError
 
 _WAL_MAGIC = b"VOLTWAL\x01"
 _SNAP_MAGIC = b"VOLTSNP\x01"

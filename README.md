@@ -1,6 +1,6 @@
-# VoltDB
+# MagmaDB
 
-**VoltDB** é um banco de dados NoSQL in-memory escrito em Python puro (biblioteca padrão), inspirado no Redis. Oferece alta performance, persistência via WAL + snapshots e replicação líder-seguidor.
+**MagmaDB** é um banco de dados NoSQL in-memory escrito em Python puro (biblioteca padrão), inspirado no Redis. Oferece alta performance, persistência via WAL + snapshots e replicação líder-seguidor.
 
 > ⚡ Zero dependências externas — apenas Python 3.10+
 
@@ -31,10 +31,10 @@
 
 ```bash
 # Master (porta 6379)
-python -m voltdb.server --port 6379 --data-dir ./data
+python -m magmadb.server --port 6379 --data-dir ./data
 
 # Slave (porta 6380)
-python -m voltdb.server --port 6380 --slaveof 127.0.0.1:6379 --data-dir ./data_slave
+python -m magmadb.server --port 6380 --slaveof 127.0.0.1:6379 --data-dir ./data_slave
 ```
 
 ### Testar com socket
@@ -43,7 +43,7 @@ python -m voltdb.server --port 6380 --slaveof 127.0.0.1:6379 --data-dir ./data_s
 python -c "
 import socket
 s = socket.socket(); s.connect(('127.0.0.1',6379))
-s.sendall(b'*3\r\n\$3\r\nSET\r\n\$4\r\nnome\r\n\$5\r\nvoltdb\r\n')
+s.sendall(b'*3\r\n\$3\r\nSET\r\n\$4\r\nnome\r\n\$5\r\nmagmadb\r\n')
 print('SET:', s.recv(4096))
 s.sendall(b'*2\r\n\$3\r\nGET\r\n\$4\r\nnome\r\n')
 print('GET:', s.recv(4096))
@@ -53,7 +53,7 @@ print('GET:', s.recv(4096))
 **Saída esperada:**
 ```
 SET: b'+OK\r\n'
-GET: b'$5\r\nvoltdb\r\n'
+GET: b'$5\r\nmagmadb\r\n'
 ```
 
 ## Parâmetros
@@ -71,7 +71,7 @@ GET: b'$5\r\nvoltdb\r\n'
 
 ```
 src/
-├── voltdb/
+├── magmadb/
 │   ├── __init__.py       # Export público
 │   ├── engine.py         # VoltEngine — LRU O(1) thread-safe
 │   ├── protocol.py       # RESP — parser/encoder do protocolo
@@ -108,7 +108,7 @@ Os testes cobrem: engine LRU, WAL recovery, snapshot/restore e integração do s
 
 ```bash
 # Terminal 1 — servidor
-python -m voltdb.server --port 6379 --data-dir ./data
+python -m magmadb.server --port 6379 --data-dir ./data
 
 # Terminal 2 — escreve dados e derruba o servidor
 python -c "
@@ -119,7 +119,7 @@ s.sendall(b'*3\r\n\$3\r\nSET\r\n\$1\r\ny\r\n\$5\r\nworld\r\n'); s.recv(4096)
 "
 
 # Deruba o servidor (Ctrl+C) e reinicia
-python -m voltdb.server --port 6379 --data-dir ./data
+python -m magmadb.server --port 6379 --data-dir ./data
 
 # Os dados ainda estão lá
 python -c "

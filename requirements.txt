@@ -1,3 +1,3 @@
-# VoltDB – NoSQL In-Memory Database
+# MagmaDB – NoSQL In-Memory Database
 # No external dependencies required.
 # Uses only Python 3.10+ standard library (asyncio, multiprocessing, socket, os, pickle, struct, etc.)

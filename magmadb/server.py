@@ -7,12 +7,12 @@ import os
 import sys
 from typing import Optional, List
 
-from voltdb.engine import VoltEngine
-from voltdb.protocol import RESP, ProtocolError
-from voltdb.storage import Wal, Snapshotter
-from voltdb.replication import ReplicaManager, ReplicaClient
+from magmadb.engine import VoltEngine
+from magmadb.protocol import RESP, ProtocolError
+from magmadb.storage import Wal, Snapshotter
+from magmadb.replication import ReplicaManager, ReplicaClient
 
-logger = logging.getLogger("voltdb.server")
+logger = logging.getLogger("magmadb.server")
 
 _DEFAULT_PORT = 6379
 _DEFAULT_MAX_KEYS = 10000

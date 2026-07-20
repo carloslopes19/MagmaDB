@@ -4,11 +4,11 @@ import asyncio
 import logging
 from typing import List, Optional, Set
 
-from voltdb.engine import VoltEngine
-from voltdb.protocol import RESP, ProtocolError
-from voltdb.storage import Wal
+from magmadb.engine import VoltEngine
+from magmadb.protocol import RESP, ProtocolError
+from magmadb.storage import Wal
 
-logger = logging.getLogger("voltdb.replication")
+logger = logging.getLogger("magmadb.replication")
 
 
 # ────────────────────────────────────────────────────────────────────
